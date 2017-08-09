@@ -1,14 +1,21 @@
 import React from 'react';
 import ReactDom from 'react-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import App from './components/App';
-
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import rootReducer from './reducers';
+import FavoriteRecipeList from './components/FavoriteRecipeList';
 
 const store = createStore(rootReducer);
-
+store.subscribe(() => console.log('store', store.getState()));
+<App />
 ReactDom.render(
   <Provider store={store}>
-    <App />
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/" component={App} />
+        <Route path="/favorites" component={FavoriteRecipeList} />
+      </Switch>
+    </BrowserRouter>
   </Provider>,document.getElementById('root'));
